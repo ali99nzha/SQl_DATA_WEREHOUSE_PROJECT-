@@ -1,16 +1,39 @@
 /*
-=============================================================
-Create Database and Schemas
-=============================================================
-Script Purpose:
-    This script creates a new database named 'DataWarehouse' after checking if it already exists. 
-    If the database exists, it is dropped and recreated. Additionally, the script sets up three schemas 
-    within the database: 'bronze', 'silver', and 'gold'.
-	
-WARNING:
-    Running this script will drop the entire 'DataWarehouse' database if it exists. 
-    All data in the database will be permanently deleted. Proceed with caution 
-    and ensure you have proper backups before running this script.
+==============================================================
+ Script Name: setup_datawarehouse.sql
+ Author: [ِAli Nzha]
+ Description:
+    This script creates a clean, structured Data Warehouse environment
+    following the multi-layer architecture pattern (Bronze → Silver → Gold).
+
+    It performs the following steps:
+    1. Switches to the 'master' database context.
+    2. Checks if a database named 'DataWarehouse' already exists:
+        - If it exists, it is forcibly set to SINGLE_USER mode
+          to terminate all active connections, then dropped.
+    3. Creates a new 'DataWarehouse' database.
+    4. Switches the context to the newly created 'DataWarehouse'.
+    5. Creates three schemas to organize the data layers:
+        - bronze:   For raw or ingested data (unprocessed source data).
+        - silver:   For cleaned, transformed, and standardized data.
+        - gold:     For curated, analytics-ready data models and reports.
+
+ Usage:
+    Run this script in SQL Server Management Studio (SSMS) 
+    or any SQL environment connected to your SQL Server instance.
+
+ Notes:
+    - This setup is typical in Data Engineering and BI projects.
+    - The multi-layer schema structure (bronze/silver/gold)
+      supports ETL/ELT pipelines and ensures data quality and scalability.
+
+==============================================================
+⚠️ WARNING:
+    - Running this script will **DROP the existing 'DataWarehouse' database** 
+      if it already exists. All data inside it will be permanently lost.
+    - Make sure you back up any important data before executing.
+    - Always review and test this script in a **development or test environment**
+      before running it in production
 */
 
 USE master;
